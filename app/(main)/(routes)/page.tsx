@@ -1,10 +1,15 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { UserButton } from '@clerk/nextjs'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export default function Home() {
   return (
   <div>
- this is protected route
+    <UserButton 
+      afterSignOutUrl='/'
+    />
+    <ModeToggle />
   </div>
   )
 }
