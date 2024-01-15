@@ -12,7 +12,12 @@ import {
     DialogHeader,
     DialogTitle,
 
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import {
+
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button"
 
 export const InitialModal = () => {
 
@@ -32,6 +37,12 @@ export const InitialModal = () => {
             imageUrl: ""
         }
     })
+
+    const isLoading = form.formState.isSubmitting;
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values);
+    }
     return (
        <Dialog open>
         <DialogContent className="bg-white text-black p-0 overflow-hidden">
