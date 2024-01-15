@@ -1,9 +1,50 @@
 "use client"
 
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from "react-hook-form"
+
+import { 
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+
+} from "@/components/ui/dialog"
+
 export const InitialModal = () => {
+
+    const formSchema = z.object({
+        name: z.string().min(1, {
+            message: "Server name is required."
+        }),
+        imageUrl: z.string().min(1, {
+            message: "Server image is required."
+        })
+    })
+
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            name: "",
+            imageUrl: ""
+        }
+    })
     return (
-        <div>
-            will be a modal!
-        </div>
+       <Dialog open>
+        <DialogContent className="bg-white text-black p-0 overflow-hidden">
+            <DialogHeader className="pt-8 px-6">
+                <DialogTitle className="text-2xl text-center font-bold">
+                    Customize your server
+                </DialogTitle>
+                <DialogDescription className="text-center text-zinc-500">
+                    casa comigo carol eu sei desenhar
+                </DialogDescription>
+            </DialogHeader>
+
+        </DialogContent>
+       </Dialog>
     )
 }
