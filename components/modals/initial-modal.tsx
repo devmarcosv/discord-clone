@@ -78,7 +78,8 @@ export const InitialModal = () => {
                 </DialogDescription>
             </DialogHeader>
             <Form {...form}>
-                <form className='space-y-8'>
+                <form onSubmit={form.handleSubmit(onSubmit)}
+                 className='space-y-8'>
                 <div className='space-y-8 px-6'>
                     <div className='flex items-center justify-center text-center'>
                         <FormField 
@@ -95,10 +96,8 @@ export const InitialModal = () => {
                                     </FormControl>
                                 </FormItem>
                             )}
-
                         />
                     </div>
-
                     <FormField
                         control={form.control}
                         name='name'
@@ -125,7 +124,7 @@ export const InitialModal = () => {
                     />          
                 </div>
                 </form>
-                <DialogFooter className='bg-gray-100 px-6 py-4'>
+                <DialogFooter className="bg-gray-100 px-6 py-4">
                     <Button variant="primary" disabled={isLoading}>
                         Create
                     </Button>

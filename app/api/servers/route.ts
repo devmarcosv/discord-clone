@@ -5,7 +5,6 @@ import { MemberRole } from "@prisma/client";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import next from "next";
 
 export async function POST(req: Request) {
     try {
