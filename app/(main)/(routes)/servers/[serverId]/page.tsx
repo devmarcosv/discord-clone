@@ -4,6 +4,6 @@ const ServerIdPage = () => {
             Server ID Page
         </div>
     )
-}lay
+}
 
 export default ServerIdPage;
