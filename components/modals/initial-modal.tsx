@@ -51,6 +51,7 @@ export const InitialModal = () => {
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values);
         try{
             await axios.post("/api/servers", values);
 
@@ -64,7 +65,6 @@ export const InitialModal = () => {
     }
 
     if(!isMounted) return null;
-
 
     return (
        <Dialog open>
@@ -123,12 +123,12 @@ export const InitialModal = () => {
                         )}
                     />          
                 </div>
-                </form>
                 <DialogFooter className="bg-gray-100 px-6 py-4">
                     <Button variant="primary" disabled={isLoading}>
                         Create
                     </Button>
                 </DialogFooter>
+                </form>
             </Form>
         </DialogContent>
        </Dialog>
