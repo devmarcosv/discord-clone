@@ -1,8 +1,9 @@
 "use client"
 
+import axios from "axios";
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 
 import { 
     Dialog,
@@ -18,10 +19,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from 'react';
 import { FileUpload } from '@/components/file-upload';
+import { useRouter } from "next/navigation";
 
 export const InitialModal = () => {
 
     const[isMounted, setIsMounted] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         setIsMounted(true);
@@ -49,10 +52,19 @@ export const InitialModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         console.log(values);
+        try{
+            await axios.post("/api/servers", values);
+
+            form.reset();
+            router.refresh()
+            window.location.reload();
+
+        }catch(error) {
+            console.log(error);
+        }
     }
 
     if(!isMounted) return null;
-
 
     return (
        <Dialog open>
@@ -66,7 +78,8 @@ export const InitialModal = () => {
                 </DialogDescription>
             </DialogHeader>
             <Form {...form}>
-                <form className='space-y-8'>
+                <form onSubmit={form.handleSubmit(onSubmit)}
+                 className='space-y-8'>
                 <div className='space-y-8 px-6'>
                     <div className='flex items-center justify-center text-center'>
                         <FormField 
@@ -83,10 +96,8 @@ export const InitialModal = () => {
                                     </FormControl>
                                 </FormItem>
                             )}
-
                         />
                     </div>
-
                     <FormField
                         control={form.control}
                         name='name'
@@ -112,12 +123,12 @@ export const InitialModal = () => {
                         )}
                     />          
                 </div>
-                </form>
-                <DialogFooter className='bg-gray-100 px-6 py-4'>
+                <DialogFooter className="bg-gray-100 px-6 py-4">
                     <Button variant="primary" disabled={isLoading}>
                         Create
                     </Button>
                 </DialogFooter>
+                </form>
             </Form>
         </DialogContent>
        </Dialog>
