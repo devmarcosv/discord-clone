@@ -1,5 +1,6 @@
 "use client"
-import { Copy } from "lucide-react"
+import { Copy, RefreshCw } from "lucide-react"
+import { useState } from "react"
 
 import { 
     Dialog,
@@ -14,10 +15,26 @@ import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useOrigin } from "@/hooks/use-origin"
 
 export const InviteModal = () => {
-    const { isOpen, onClose, type } = useModal();
-    const router = useRouter();
+    const { isOpen, onClose, type, data } = useModal();
+    const origin = useOrigin();
+
+    const { server } = data;
+    const [copied, setCopied] = useState(false);
+    const[isLoading, setIsLoading] = useState();
+
+    const inviteUrl = `${origin}/invite/${server?.inviteCode}`
+
+    const onCopy = () => {
+        navigator.clipboard.writeText(inviteUrl);
+        setCopied(true);
+
+        setTimeout(() => {
+            setCopied(false)
+        }, 100)
+    }
 
     const isModalOpen = isOpen && type === "invite";
 
@@ -38,12 +55,19 @@ export const InviteModal = () => {
                         <Input
                             className="bg-zinc-300/50 border-0 focus-visible:ring-0
                             text-black focus-visible:ring-offset-0"
-                            value="invite-link"/>
+                            value={inviteUrl}/>
                     </div>
                     <Button size="icon">
-                        <Copy />
+                        <Copy className="w-4 h-4" />
                     </Button>
                 </div>
+                <Button
+                    variant="link"
+                    size="sm"
+                    className="text-xs text-zinc-500 mt-4">
+                        Generate a new Link
+                    <RefreshCw className="w-4 h-4 ml-2" />
+                </Button>
                 </DialogContent>
         </Dialog>
         )
