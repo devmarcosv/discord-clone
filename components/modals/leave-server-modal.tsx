@@ -1,7 +1,6 @@
 "use client"
 
 import axios from "axios"
-import { Copy, RefreshCw, Check } from "lucide-react"
 import { useState } from "react"
 
 import { 
@@ -12,20 +11,35 @@ import {
     DialogTitle,
 
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label"
 
 import { useModal } from "@/hooks/use-modal-store"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 
 export const LeaveServerModal = () => {
-    const { onOpen, isOpen, onClose, type, data } = useModal();
+    const { isOpen, onClose, type, data } = useModal();
+    const router = useRouter();
 
     const isModalOpen = isOpen && type === "leaveServer";
     const { server } = data;
-    const [copied, setCopied] = useState(false);
     const[isLoading, setIsLoading] = useState(false);
+
+    const onClick = async () => {
+        try {
+            setIsLoading(true);
+
+            await axios.patch(`/api/servers/${server?.id}/leave`);
+
+            onClose();
+            router.refresh();
+            router.push("/");
+        } catch(error) {
+            console.log(error)
+        }finally {
+            setIsLoading(false);
+        }
+    }
 
 
     return (
@@ -40,7 +54,21 @@ export const LeaveServerModal = () => {
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="bg-gray-100 px-6 py-4">
+                    <div className="flex items-center justify-between w-full">
+                        <Button
+                            disabled={isLoading}
+                            onClick={onClose}
+                            variant="ghost">
+                            Cancel
+                        </Button>
+                        <Button
+                            disabled={isLoading}
+                            variant="primary"
+                            onClick={onClick}>
+                            Confirm
+                        </Button>
 
+                    </div>
                 </DialogFooter>                  
                 </DialogContent>
         </Dialog>
