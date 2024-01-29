@@ -50,6 +50,7 @@ export const CreateChannelModal = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
+            type: ChannelType.TEXT
         }
     })
 
@@ -108,7 +109,23 @@ export const CreateChannelModal = () => {
                                         <FormMessage />
                                     </FormItem>
                                     )}
-                            />          
+                            /> 
+                            <FormField
+                                control={form.control}
+                                name="type"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel> Channel Type</FormLabel>
+                                        <Select
+                                            disabled={isLoading}
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+
+                                        </Select>
+                                    </FormItem>
+                                )}
+                            />         
                         </div>
                         <DialogFooter className="bg-gray-100 px-6 py-4">
                             <Button variant="primary" disabled={isLoading}>
