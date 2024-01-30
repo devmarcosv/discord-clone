@@ -91,11 +91,27 @@ export const ServerSidebar = async({
                                     name: channel.name,
                                     icon: iconMap[channel.type]
                                 }))
+                            },
+                            {
+                                label: "Voice Channels",
+                                type: "channel",
+                                data: audioChannels?.map((channel) => ({
+                                    id: channel.id,
+                                    name: channel.name,
+                                    icon: iconMap[channel.type]
+                                }))
+                            },
+                            {
+                                label: "Video Channels",
+                                type: "channel",
+                                data: videoChannels?.map((channel) => ({
+                                    id: channel.id,
+                                    name: channel.name,
+                                    icon: iconMap[channel.type]
+                                }))
                             }
                         ]} />
-
                 </div>
-
             </ScrollArea>
         </div>
     )
