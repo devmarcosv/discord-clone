@@ -39,6 +39,8 @@ export const ServerSidebar = async({
     if (!profile) {
         return redirect("/");
     }
+
+    // lalala
     
     const server = await db.server.findUnique({
         where: {
