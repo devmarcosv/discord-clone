@@ -58,6 +58,7 @@ export async function DELETE(
         return new NextResponse("Internal Server error", { status: 500 });
     }
 }
+
 export async function PATCH(
     req: Request,
     { params }: { params: { memberId: string }}

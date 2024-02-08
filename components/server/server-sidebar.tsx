@@ -193,7 +193,7 @@ export const ServerSidebar = async({
                             sectionType="members"
                             channelType={ChannelType.TEXT}
                             role={role}
-                            label="Video Channels" />
+                            label="Members" />
 
                             <div className="space-y-[2px]">
                                 {members.map((member) => (
