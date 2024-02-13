@@ -8,7 +8,7 @@ export async function DELETE(
     { params }: { params: { channelId: string }}
 ) {
     try {
-        const profile = currentProfile();
+        const profile = await currentProfile();
         const { searchParams } = new URL(req.url);
 
         const serverId = searchParams.get("serverId");
@@ -24,8 +24,6 @@ export async function DELETE(
         if (!params.channelId) {
             return new NextResponse("Channel ID missing", { status: 400 });
         }
-
-        //TODO: contém inconsistencias;
 
         const server = await db.server.update({
             where: {
@@ -63,7 +61,7 @@ export async function PATCH(
     { params }: { params: { channelId: string }}
 ) {
     try {
-        const profile = currentProfile();
+        const profile = await currentProfile();
         const { name, type } = await req.json();
         const { searchParams } = new URL(req.url);
 
@@ -84,8 +82,6 @@ export async function PATCH(
         if (name === "general") {
             return new NextResponse("Name Cannot be 'general'", { status: 400 });
         }
-
-        //TODO: contém inconsistencias;
 
         const server = await db.server.update({
             where: {

@@ -37,7 +37,7 @@ export const ServerSection = ({
                     </button>
                 </ActionTooltip>
             )}
-            {role !== MemberRole.ADMIN && sectionType === "channels" && (
+            {role === MemberRole.ADMIN && sectionType === "members" && (
                 <ActionTooltip label="Manage Members" side="top">
                     <button
                         onClick={() => onOpen("members", { server })} 
@@ -47,6 +47,7 @@ export const ServerSection = ({
                     </button>
                 </ActionTooltip>
             )}
+            
            </div>
     )
 }
